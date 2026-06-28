@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbershop Rayane — Barbiere a Cuneo</title>
+<meta name="description" content="Barbershop Rayane, barbiere uomo a Cuneo. Taglio, barba, rasatura tradizionale. Corso Vittorio Emanuele II, 4.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0c0b0a;
+    --black-2:#171310;
+    --bronze:#7c5a2e;
+    --gold:#c9a24b;
+    --gold-light:#e8cd8e;
+    --cream:#f3ecdd;
+    --cream-dim:#cfc4ab;
+    --line: rgba(201,162,75,0.25);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--cream);
+    font-family:'Manrope',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--gold);color:#0c0b0a;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:18px;height:1px;
+    background:var(--gold);
+    display:block;
+  }
+  h1,h2,h3{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    letter-spacing:0.01em;
+    line-height:1.15;
+  }
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  section{ position:relative; }
+
+  /* ===== Stripe divider (barber pole motif) ===== */
+  .stripe-divider{
+    height:10px;
+    width:100%;
+    background:repeating-linear-gradient(
+      -45deg,
+      var(--gold) 0 10px,
+      var(--black-2) 10px 20px,
+      var(--cream) 20px 22px,
+      var(--black-2) 22px 32px
+    );
+    background-size: 200% 100%;
+    animation: slidePole 6s linear infinite;
+    opacity:0.9;
+  }
+  @keyframes slidePole{ to{ background-position-x:-200%; } }
+  @media (prefers-reduced-motion: reduce){
+    .stripe-divider{animation:none;}
+  }
+
+  /* ===== Header ===== */
+  header{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    padding:18px 0;
+    transition: background .4s ease, padding .4s ease, border-color .4s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.solid{
+    background:rgba(12,11,10,0.86);
+    backdrop-filter: blur(14px);
+    padding:12px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-family:'Cinzel',serif;
+    font-size:1.05rem;
+    letter-spacing:0.05em;
+  }
+  .brand img{
+    width:42px;height:42px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:#000;
+  }
+  .brand .sub{
+    display:block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.6rem;
+    letter-spacing:0.18em;
+    color:var(--cream-dim);
+    text-transform:uppercase;
+    margin-top:2px;
+  }
+  nav ul{
+    display:flex;
+    gap:36px;
+    list-style:none;
+    font-size:0.85rem;
+    letter-spacing:0.03em;
+  }
+  nav ul a{
+    position:relative;
+    padding-bottom:4px;
+    color:var(--cream-dim);
+    transition:color .25s;
+  }
+  nav ul a::after{
+    content:"";
+    position:absolute;left:0;bottom:0;
+    width:0%;height:1px;
+    background:var(--gold);
+    transition:width .3s ease;
+  }
+  nav ul a:hover{color:var(--cream);}
+  nav ul a:hover::after{width:100%;}
+  .nav-cta{
+    border:1px solid var(--gold);
+    color:var(--gold)!important;
+    padding:9px 20px;
+    border-radius:2px;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    transition: all .3s;
+  }
+  .nav-cta:hover{background:var(--gold); color:var(--black)!important;}
+  .nav-cta::after{display:none;}
+  .menu-btn{display:none;background:none;border:none;color:var(--cream);font-size:1.6rem;cursor:pointer;}
+
+  /* ===== Hero ===== */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding-top:120px;
+    position:relative;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201,162,75,0.10), transparent 60%),
+      linear-gradient(180deg, var(--black) 0%, #0c0b0a 70%, var(--black-2) 100%);
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity:0.18;
+    mask-image: radial-gradient(circle at 50% 30%, black 0%, transparent 70%);
+  }
+  .hero-inner{
+    position:relative; z-index:2;
+    width:100%;
+    display:grid;
+    grid-template-columns: 1.3fr 0.9fr;
+    gap:60px;
+    align-items:center;
+  }
+  .hero-badge-wrap{
+    display:flex;
+    justify-content:center;
+  }
+  .seal{
+    position:relative;
+    width:300px; height:300px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: radial-gradient(circle at 35% 30%, rgba(201,162,75,0.18), rgba(0,0,0,0) 65%), #100d0a;
+    border:1px solid var(--line);
+    animation: floatSeal 7s ease-in-out infinite;
+  }
+  @keyframes floatSeal{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .seal::before{
+    content:"";
+    position:absolute; inset:14px;
+    border-radius:50%;
+    border:1px dashed var(--line);
+    animation: spinSlow 40s linear infinite;
+  }
+  @keyframes spinSlow{ to{ transform:rotate(360deg); } }
+  .seal img{ width:200px; height:200px; border-radius:50%; position:relative; z-index:2; }
+  @media (prefers-reduced-motion: reduce){
+    .seal, .seal::before{animation:none;}
+  }
+
+  .hero h1{
+    font-size:clamp(2.6rem, 5.4vw, 4.5rem);
+    color:var(--cream);
+    margin:18px 0 22px;
+  }
+  .hero h1 em{
+    display:block;
+    font-style:normal;
+    color:var(--gold);
+    font-size:0.45em;
+    letter-spacing:0.3em;
+    font-family:'JetBrains Mono',monospace;
+    margin-bottom:14px;
+  }
+  .hero p.lead{
+    font-size:1.08rem;
+    color:var(--cream-dim);
+    max-width:480px;
+    line-height:1.7;
+    margin-bottom:34px;
+  }
+  .hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:48px; }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:15px 28px;
+    font-size:0.82rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    border-radius:2px;
+    transition: all .3s;
+    font-weight:600;
+  }
+  .btn-primary{ background:var(--gold); color:#1a1410; }
+  .btn-primary:hover{ background:var(--gold-light); transform:translateY(-2px); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--cream); }
+  .btn-ghost:hover{ border-color:var(--gold); color:var(--gold); }
+
+  .stat-row{
+    display:flex;
+    gap:40px;
+    flex-wrap:wrap;
+  }
+  .stat-row .stat{ border-left:1px solid var(--line); padding-left:16px; }
+  .stat-row .stat b{
+    display:block;
+    font-family:'Cinzel',serif;
+    font-size:1.7rem;
+    color:var(--gold-light);
+  }
+  .stat-row .stat span{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.66rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--cream-dim);
+  }
+
+  /* ===== Reveal on scroll ===== */
+  .reveal{ opacity:0; transform:translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ===== Section heading pattern ===== */
+  .section-head{
+    text-align:center;
+    max-width:640px;
+    margin:0 auto 64px;
+  }
+  .section-head h2{
+    font-size:clamp(2rem, 3.6vw, 2.8rem);
+    color:var(--cream);
+    margin-top:14px;
+  }
+  .section-head .eyebrow{ justify-content:center; }
+  .section-head .eyebrow::before, .section-head .eyebrow::after{ content:""; width:18px; height:1px; background:var(--gold); }
+  .section-head p{ color:var(--cream-dim); margin-top:16px; line-height:1.7; }
+
+  /* ===== About ===== */
+  .about{ padding:140px 0; background:var(--black-2); }
+  .about-grid{
+    display:grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap:70px;
+    align-items:center;
+  }
+  .about-visual{
+    position:relative;
+    aspect-ratio: 4/5;
+    border:1px solid var(--line);
+    background:
+      radial-gradient(circle at 30% 20%, rgba(201,162,75,0.16), transparent 55%),
+      repeating-linear-gradient(135deg, #14110d 0 26px, #181410 26px 52px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .about-visual .mono{
+    width:64%;
+  }
+  .about-visual .corner{
+    position:absolute; width:36px; height:36px;
+    border:1px solid var(--gold);
+  }
+  .about-visual .corner.tl{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
+  .about-visual .corner.br{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+
+  .about-text p{ color:var(--cream-dim); line-height:1.8; margin-bottom:20px; font-size:1.02rem; }
+  .about-text .quote{
+    font-family:'Cinzel',serif;
+    font-size:1.3rem;
+    color:var(--gold-light);
+    border-left:2px solid var(--gold);
+    padding-left:22px;
+    margin:30px 0;
+    line-height:1.5;
+  }
+  .pillars{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:36px; }
+  .pillar{ border-top:1px solid var(--line); padding-top:14px; }
+  .pillar b{ display:block; font-family:'Cinzel',serif; color:var(--gold); font-size:0.95rem; margin-bottom:6px; }
+  .pillar span{ font-size:0.86rem; color:var(--cream-dim); }
+
+  /* ===== Services ===== */
+  .services{ padding:140px 0; }
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .service-card{
+    background:var(--black);
+    padding:46px 34px;
+    transition: background .35s;
+    position:relative;
+    overflow:hidden;
+  }
+  .service-card:hover{ background:var(--black-2); }
+  .service-card .icon{
+    width:46px;height:46px;
+    margin-bottom:26px;
+    color:var(--gold);
+  }
+  .service-card h3{ font-size:1.2rem; color:var(--cream); margin-bottom:10px; }
+  .service-card p{ color:var(--cream-dim); font-size:0.92rem; line-height:1.65; }
+  .service-card .tag{
+    display:inline-block;
+    margin-top:18px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.66rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--bronze);
+  }
+  .services-note{
+    text-align:center;
+    margin-top:36px;
+    color:var(--cream-dim);
+    font-size:0.9rem;
+  }
+  .services-note a{ color:var(--gold); border-bottom:1px solid var(--gold); }
+
+  /* ===== Gallery ===== */
+  .gallery{ padding:140px 0; background:var(--black-2); }
+  .gallery-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows:160px;
+    gap:14px;
+  }
+  .g-cell{
+    border:1px solid var(--line);
+    background:
+      radial-gradient(circle at var(--gx,30%) var(--gy,30%), rgba(201,162,75,0.16), transparent 60%),
+      #110e0b;
+    display:flex; align-items:center; justify-content:center;
+    transition: transform .4s ease, border-color .4s;
+  }
+  .g-cell:hover{ transform:translateY(-6px); border-color:var(--gold); }
+  .g-cell.tall{ grid-row: span 2; }
+  .g-cell svg{ width:34%; height:34%; color:var(--gold); opacity:0.85; }
+
+  /* ===== Reviews ===== */
+  .reviews{ padding:140px 0; }
+  .review-top{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:28px;
+    flex-wrap:wrap;
+    margin-bottom:60px;
+  }
+  .score-box{
+    text-align:center;
+    border:1px solid var(--line);
+    padding:30px 40px;
+  }
+  .score-box .num{ font-family:'Cinzel',serif; font-size:3.2rem; color:var(--gold-light); }
+  .stars{ color:var(--gold); letter-spacing:3px; margin:6px 0; }
+  .score-box span{ font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.1em; color:var(--cream-dim); text-transform:uppercase; }
+  .review-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .review-card{
+    border:1px solid var(--line);
+    padding:30px;
+    background:var(--black-2);
+  }
+  .review-card .stars{ font-size:0.9rem; margin-bottom:14px; }
+  .review-card p{ color:var(--cream-dim); line-height:1.7; font-size:0.95rem; font-style:italic; }
+  .review-card .who{ margin-top:18px; font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--bronze); letter-spacing:0.05em; }
+
+  /* ===== Contact ===== */
+  .contact{ padding:140px 0 120px; background:var(--black-2); }
+  .contact-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:70px;
+  }
+  .info-list{ margin-top:30px; display:flex; flex-direction:column; gap:26px; }
+  .info-item{ display:flex; gap:18px; align-items:flex-start; }
+  .info-item .ic{ width:22px; height:22px; color:var(--gold); flex-shrink:0; margin-top:3px; }
+  .info-item b{ display:block; font-family:'Cinzel',serif; font-size:0.95rem; color:var(--cream); margin-bottom:4px; }
+  .info-item span, .info-item a{ color:var(--cream-dim); font-size:0.95rem; line-height:1.6; }
+  .info-item a:hover{ color:var(--gold); }
+  .status-pill{
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--line); padding:6px 14px; border-radius:20px;
+    font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.05em;
+    color:var(--cream-dim); margin-top:10px;
+  }
+  .status-pill .dot{ width:7px;height:7px;border-radius:50%; background:#7bd88f; box-shadow:0 0 8px #7bd88f; }
+
+  .map-frame{
+    border:1px solid var(--line);
+    overflow:hidden;
+    height:100%;
+    min-height:380px;
+  }
+  .map-frame iframe{ width:100%; height:100%; border:0; filter: grayscale(0.3) contrast(1.05); }
+
+  footer{
+    padding:50px 0;
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  footer .brand{ font-size:0.95rem; }
+  footer .fmenu{ display:flex; gap:28px; list-style:none; font-size:0.85rem; color:var(--cream-dim); }
+  footer .fmenu a:hover{ color:var(--gold); }
+  footer .credit{ font-size:0.75rem; color:var(--bronze); font-family:'JetBrains Mono',monospace; }
+
+  .back-top{
+    position:fixed; bottom:28px; right:28px;
+    width:48px;height:48px;
+    border:1px solid var(--gold);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gold);
+    background:rgba(12,11,10,0.8);
+    backdrop-filter:blur(8px);
+    opacity:0; pointer-events:none;
+    transition: opacity .3s, transform .3s;
+    z-index:90;
+  }
+  .back-top.show{ opacity:1; pointer-events:auto; }
+  .back-top:hover{ background:var(--gold); color:var(--black); }
+
+  @media (max-width: 920px){
+    nav ul, .nav-cta{ display:none; }
+    .menu-btn{ display:block; }
+    .hero-inner{ grid-template-columns:1fr; text-align:center; }
+    .hero-badge-wrap{ order:-1; }
+    .seal{ width:200px;height:200px; }
+    .seal img{ width:130px;height:130px; }
+    .hero p.lead{ margin:0 auto 34px; }
+    .stat-row{ justify-content:center; }
+    .about-grid, .contact-grid{ grid-template-columns:1fr; gap:48px; }
+    .services-grid{ grid-template-columns:1fr 1fr; }
+    .gallery-grid{ grid-template-columns:repeat(2,1fr); }
+    .review-cards{ grid-template-columns:1fr; }
+    .pillars{ grid-template-columns:1fr; }
+  }
+  @media (max-width: 560px){
+    .services-grid{ grid-template-columns:1fr; }
+    .gallery-grid{ grid-template-columns:repeat(2,1fr); grid-auto-rows:130px; }
+    .score-box{ padding:24px 28px; }
+  }
+
+  /* mobile drawer */
+  .drawer{
+    position:fixed; inset:0; z-index:200;
+    background:rgba(8,7,6,0.97);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:32px;
+    transform:translateY(-100%);
+    transition: transform .4s ease;
+  }
+  .drawer.open{ transform:translateY(0); }
+  .drawer a{ font-family:'Cinzel',serif; font-size:1.4rem; color:var(--cream); }
+  .drawer .close{ position:absolute; top:24px; right:28px; font-size:2rem; color:var(--cream); background:none;border:none;cursor:pointer; }
+</style>
+</head>
+<body>
+
+<header id="header">
+  <div class="container nav-row">
+    <a href="#top" class="brand">
+      <img src="images/logo.png" alt="Barbershop Rayane logo">
+      <span>BARBERSHOP RAYANE<span class="sub">Cuneo · Est. Barbiere</span></span>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#chi-siamo">Chi siamo</a></li>
+        <li><a href="#servizi">Servizi</a></li>
+        <li><a href="#galleria">Galleria</a></li>
+        <li><a href="#recensioni">Recensioni</a></li>
+        <li><a href="#contatti">Contatti</a></li>
+      </ul>
+    </nav>
+    <a href="tel:+393513392106" class="nav-cta">Prenota ora</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Apri menu">☰</button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <button class="close" id="closeDrawer">×</button>
+  <a href="#chi-siamo">Chi siamo</a>
+  <a href="#servizi">Servizi</a>
+  <a href="#galleria">Galleria</a>
+  <a href="#recensioni">Recensioni</a>
+  <a href="#contatti">Contatti</a>
+  <a href="tel:+393513392106" style="color:#c9a24b;">351 339 2106</a>
+</div>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <span class="eyebrow">Corso Vittorio Emanuele II, 4 — Cuneo</span>
+        <h1><em>Tradizione &amp; precisione dal 2018</em>Barbershop<br>Rayane</h1>
+        <p class="lead">Un barbiere di quartiere a Cuneo dove taglio, barba e rasatura tradizionale si curano con la stessa attenzione di sempre, gesto dopo gesto.</p>
+        <div class="hero-ctas">
+          <a href="tel:+393513392106" class="btn btn-primary">Chiama per un appuntamento</a>
+          <a href="https://www.instagram.com/_barber_shop_rayane/" target="_blank" rel="noopener" class="btn btn-ghost">Seguici su Instagram</a>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><b>4,4 / 5</b><span>Valutazione Google</span></div>
+          <div class="stat"><b>25</b><span>Recensioni</span></div>
+          <div class="stat"><b>Cuneo</b><span>Corso V. Emanuele II</span></div>
+        </div>
+      </div>
+      <div class="hero-badge-wrap">
+        <div class="seal">
+          <img src="images/logo.png" alt="Stemma Barbershop Rayane">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stripe-divider"></div>
+
+  <section class="about" id="chi-siamo">
+    <div class="container about-grid">
+      <div class="reveal about-visual">
+        <svg class="mono" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="70" stroke="#c9a24b" stroke-width="1" opacity="0.5"/>
+          <path d="M70 60 L70 140 M70 60 C70 60 100 70 100 100 C100 130 70 140 70 140" stroke="#e8cd8e" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M130 60 L70 140 M90 60 L130 140" stroke="#c9a24b" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div class="corner tl"></div>
+        <div class="corner br"></div>
+      </div>
+      <div class="reveal about-text">
+        <span class="eyebrow">Chi siamo</span>
+        <h2>Un mestiere che si impara con le mani</h2>
+        <p>Barbershop Rayane nasce a Cuneo, in Corso Vittorio Emanuele II, come spazio dove il taglio uomo e la cura della barba tornano ad essere un rito quotidiano fatto con calma e cura del dettaglio, non una sosta veloce.</p>
+        <p class="quote">"Ogni cliente esce con un'immagine di sé più curata, non solo con un taglio diverso."</p>
+        <p>Nel negozio, l'attenzione resta sul gesto classico del barbiere: forbici, rasoio e prodotti scelti per ogni tipo di capello e di pelle, dal taglio più sobrio alle lavorazioni più ricercate.</p>
+        <div class="pillars">
+          <div class="pillar"><b>Manualità</b><span>Tecniche di taglio e rasatura tradizionali</span></div>
+          <div class="pillar"><b>Ascolto</b><span>Ogni servizio parte da una consulenza</span></div>
+          <div class="pillar"><b>Costanza</b><span>4,4★ su 25 recensioni Google</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="servizi">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Servizi</span>
+        <h2>Cosa facciamo</h2>
+        <p>Una selezione dei servizi disponibili in salone. Per il listino prezzi aggiornato, contattaci telefonicamente o su Instagram.</p>
+      </div>
+      <div class="services-grid reveal">
+        <div class="service-card">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 8.5 19 19M8.5 15.5 19 5"/></svg>
+          <h3>Taglio uomo</h3>
+          <p>Taglio classico o moderno, sfumature e styling personalizzato sulla forma del viso.</p>
+          <span class="tag">Su appuntamento</span>
+        </div>
+        <div class="service-card">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 4c4 0 6 6 8 6s4-6 8-6M4 20c4 0 6-6 8-6s4 6 8 6"/></svg>
+          <h3>Rasatura &amp; barba</h3>
+          <p>Regolazione, disegno e rasatura tradizionale a rasoio con panno caldo.</p>
+          <span class="tag">Rito barbiere</span>
+        </div>
+        <div class="service-card">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 9v11"/></svg>
+          <h3>Taglio + barba</h3>
+          <p>Il percorso completo: taglio capelli e cura della barba nella stessa seduta.</p>
+          <span class="tag">Il più richiesto</span>
+        </div>
+        <div class="service-card">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3v18M5 8c0 4 3 4 3 8M19 8c0 4-3 4-3 8"/></svg>
+          <h3>Styling &amp; finish</h3>
+          <p>Prodotti selezionati per definire e mantenere il look anche dopo l'uscita dal salone.</p>
+          <span class="tag">A richiesta</span>
+        </div>
+        <div class="service-card">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+          <h3>Taglio bambino</h3>
+          <p>Primo taglio o taglio periodico per i più piccoli, con pazienza e calma.</p>
+          <span class="tag">Su richiesta</span>
+        </div>
+        <div class="service-card">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 12h18M3 12c0-4 4-7 9-7s9 3 9 7-4 7-9 7-9-3-9-7Z"/></svg>
+          <h3>Trattamenti viso</h3>
+          <p>Pulizia e cura della pelle dopo rasatura per completare il rito barbiere.</p>
+          <span class="tag">A richiesta</span>
+        </div>
+      </div>
+      <p class="services-note">Listino completo e disponibilità in salone — <a href="tel:+393513392106">351 339 2106</a> oppure <a href="https://www.instagram.com/_barber_shop_rayane/" target="_blank" rel="noopener">su Instagram</a>.</p>
+    </div>
+  </section>
+
+  <div class="stripe-divider"></div>
+
+  <section class="gallery" id="galleria">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Galleria</span>
+        <h2>L'ambiente e i ferri del mestiere</h2>
+        <p>Per gli scatti più recenti del salone e dei lavori, il riferimento aggiornato resta il nostro profilo Instagram.</p>
+      </div>
+      <div class="gallery-grid reveal">
+        <div class="g-cell tall" style="--gx:30%; --gy:20%;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 8.5 19 19M8.5 15.5 19 5"/></svg></div>
+        <div class="g-cell" style="--gx:70%; --gy:60%;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M4 4c4 0 6 6 8 6s4-6 8-6M4 20c4 0 6-6 8-6s4 6 8 6"/></svg></div>
+        <div class="g-cell" style="--gx:50%; --gy:50%;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <div class="g-cell tall" style="--gx:60%; --gy:30%;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M12 3v18M5 8c0 4 3 4 3 8M19 8c0 4-3 4-3 8"/></svg></div>
+        <div class="g-cell" style="--gx:40%; --gy:70%;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 9v11"/></svg></div>
+        <div class="g-cell" style="--gx:20%; --gy:40%;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M3 12h18M3 12c0-4 4-7 9-7s9 3 9 7-4 7-9 7-9-3-9-7Z"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews" id="recensioni">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Recensioni</span>
+        <h2>Quello che dicono i clienti</h2>
+      </div>
+      <div class="review-top reveal">
+        <div class="score-box">
+          <div class="num">4,4</div>
+          <div class="stars">★★★★★</div>
+          <span>Media su Google · 25 recensioni</span>
+        </div>
+      </div>
+      <div class="review-cards reveal">
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>"Ambiente accogliente e taglio sempre preciso, ci torno volentieri."</p>
+          <div class="who">— Cliente Google</div>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>"Attenzione ai dettagli e gentilezza, esattamente quello che cerco in un barbiere."</p>
+          <div class="who">— Cliente Google</div>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>"Barba sistemata alla perfezione, personale professionale e disponibile."</p>
+          <div class="who">— Cliente Google</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stripe-divider"></div>
+
+  <section class="contact" id="contatti">
+    <div class="container contact-grid">
+      <div class="reveal">
+        <span class="eyebrow">Contatti</span>
+        <h2 style="margin-top:14px; font-size:clamp(1.9rem,3.2vw,2.5rem); color:var(--cream);">Vieni a trovarci</h2>
+        <div class="info-list">
+          <div class="info-item">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s7-6.6 7-12a7 7 0 1 0-14 0c0 5.4 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <div><b>Indirizzo</b><span>Corso Vittorio Emanuele II, 4 — 12100 Cuneo (CN)</span></div>
+          </div>
+          <div class="info-item">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 3.18 2 2 0 0 1 4.11 1h2a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92Z"/></svg>
+            <div><b>Telefono</b><a href="tel:+393513392106">351 339 2106</a></div>
+          </div>
+          <div class="info-item">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+            <div><b>Instagram</b><a href="https://www.instagram.com/_barber_shop_rayane/" target="_blank" rel="noopener">@_barber_shop_rayane</a></div>
+          </div>
+          <div class="info-item">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <div>
+              <b>Orari</b>
+              <span class="status-pill"><span class="dot"></span>Aperto ora · chiude alle 20:00</span><br>
+              <span style="font-size:0.82rem;">Orari indicativi: per la disponibilità del giorno, chiama o scrivi su Instagram.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal map-frame">
+        <iframe
+          src="https://maps.google.com/maps?q=Corso%20Vittorio%20Emanuele%20II%2C%204%2C%2012100%20Cuneo%20CN&t=&z=16&ie=UTF8&iwloc=&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Mappa Barbershop Rayane Cuneo">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer class="container">
+    <a href="#top" class="brand">BARBERSHOP RAYANE</a>
+    <ul class="fmenu">
+      <li><a href="#chi-siamo">Chi siamo</a></li>
+      <li><a href="#servizi">Servizi</a></li>
+      <li><a href="#contatti">Contatti</a></li>
+      <li><a href="https://www.instagram.com/_barber_shop_rayane/" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+    <span class="credit">CUNEO, IT — © 2026</span>
+  </footer>
+
+</main>
+
+<button class="back-top" id="backTop" aria-label="Torna su">↑</button>
+
+<script>
+  // header solid on scroll
+  const header = document.getElementById('header');
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) { header.classList.add('solid'); } else { header.classList.remove('solid'); }
+    if (window.scrollY > 600) { backTop.classList.add('show'); } else { backTop.classList.remove('show'); }
+  });
+  backTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+  // mobile drawer
+  const menuBtn = document.getElementById('menuBtn');
+  const drawer = document.getElementById('drawer');
+  const closeDrawer = document.getElementById('closeDrawer');
+  menuBtn.addEventListener('click', () => drawer.classList.add('open'));
+  closeDrawer.addEventListener('click', () => drawer.classList.remove('open'));
+  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('open')));
+
+  // reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
