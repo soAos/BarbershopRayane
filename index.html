@@ -60,58 +60,67 @@
   }
   section{ position:relative; }
 
-  /* ===== Barber pole divider (horizontal, full width) ===== */
-  .pole-divider{
+  /* ===== Divider: scissor-cut hairline ===== */
+  .cut-divider{
     width:100%;
-    padding:0;
     background:var(--black);
-  }
-  .barber-pole{
-    position:relative;
-    width:100%;
-    height:26px;
+    padding:54px 0;
     overflow:hidden;
-    box-shadow: 0 1px 0 var(--line), 0 -1px 0 var(--line);
-    background:#0c0b0a;
   }
-  .barber-pole::before{
+  .cut-divider .container{
+    display:flex;
+    align-items:center;
+    gap:0;
+  }
+  .cut-line{
+    position:relative;
+    flex:1 1 auto;
+    height:1px;
+    background:var(--line);
+    transform-origin:center;
+    transform:scaleX(0);
+    transition: transform 1.1s cubic-bezier(.22,.85,.3,1);
+  }
+  .cut-line.in{ transform:scaleX(1); }
+  .cut-line::before{
     content:"";
-    position:absolute;
-    top:-10px; bottom:-10px;
-    left:-80px; right:-80px;
-    background:repeating-linear-gradient(
-      -65deg,
-      #c0312f 0 18px,
-      #f3ecdd 18px 36px,
-      #1f4fa3 36px 54px,
-      #f3ecdd 54px 72px
-    );
-    animation: poleScroll 4s linear infinite;
+    position:absolute; top:50%; left:0;
+    width:6px; height:6px;
+    background:var(--gold);
+    border-radius:50%;
+    transform:translate(-3px,-50%);
   }
-  .barber-pole::after{
+  .cut-line.right::after{
     content:"";
-    position:absolute; inset:0;
-    box-shadow: inset 0 9px 10px -6px rgba(0,0,0,0.65), inset 0 -9px 10px -6px rgba(0,0,0,0.65);
-    background: linear-gradient(180deg,
-      rgba(255,255,255,0.22) 0%,
-      rgba(255,255,255,0.05) 18%,
-      rgba(0,0,0,0) 45%,
-      rgba(0,0,0,0) 55%,
-      rgba(0,0,0,0.22) 82%,
-      rgba(0,0,0,0.4) 100%);
+    position:absolute; top:50%; right:0;
+    width:6px; height:6px;
+    background:var(--gold);
+    border-radius:50%;
+    transform:translate(3px,-50%);
   }
-  .barber-pole .cap{
-    position:absolute; top:-3px; bottom:-3px;
-    width:18px;
-    background: linear-gradient(90deg, var(--gold-light), var(--bronze));
-    z-index:3;
-    box-shadow:0 0 6px rgba(0,0,0,0.5);
+  .cut-mark{
+    flex:0 0 auto;
+    width:64px; height:64px;
+    margin:0 18px;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+    border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, rgba(201,162,75,0.14), transparent 65%), var(--black-2);
+    position:relative;
+    flex-shrink:0;
   }
-  .barber-pole .cap.top{ left:-3px; }
-  .barber-pole .cap.bottom{ right:-3px; }
-  @keyframes poleScroll{ from{ transform:translateX(0); } to{ transform:translateX(-72px); } }
-  @media (prefers-reduced-motion: reduce){
-    .barber-pole::before{animation:none;}
+  .cut-mark svg{
+    width:26px; height:26px;
+    color:var(--gold);
+    transition: transform .5s ease;
+  }
+  .cut-divider:hover .cut-mark svg{ transform:rotate(28deg) scale(1.05); }
+  .cut-mark::before{
+    content:"";
+    position:absolute; inset:-1px;
+    border-radius:50%;
+    border:1px dashed var(--line);
+    transform:scale(1.32);
   }
 
   /* ===== Header ===== */
@@ -613,10 +622,11 @@
     </div>
   </section>
 
-  <div class="pole-divider">
-    <div class="barber-pole">
-      <span class="cap top"></span>
-      <span class="cap bottom"></span>
+  <div class="cut-divider">
+    <div class="container">
+      <div class="cut-line" data-cut></div>
+      <div class="cut-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 8.5 19 19M8.5 15.5 19 5"/></svg></div>
+      <div class="cut-line right" data-cut></div>
     </div>
   </div>
 
@@ -695,10 +705,11 @@
     </div>
   </section>
 
-  <div class="pole-divider">
-    <div class="barber-pole">
-      <span class="cap top"></span>
-      <span class="cap bottom"></span>
+  <div class="cut-divider">
+    <div class="container">
+      <div class="cut-line" data-cut></div>
+      <div class="cut-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 9v11"/></svg></div>
+      <div class="cut-line right" data-cut></div>
     </div>
   </div>
 
@@ -753,10 +764,11 @@
     </div>
   </section>
 
-  <div class="pole-divider">
-    <div class="barber-pole">
-      <span class="cap top"></span>
-      <span class="cap bottom"></span>
+  <div class="cut-divider">
+    <div class="container">
+      <div class="cut-line" data-cut></div>
+      <div class="cut-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 8.5 19 19M8.5 15.5 19 5"/></svg></div>
+      <div class="cut-line right" data-cut></div>
     </div>
   </div>
 
@@ -838,6 +850,13 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
   }, { threshold: 0.15 });
   reveals.forEach(el => obs.observe(el));
+
+  // cut-line dividers
+  const cutLines = document.querySelectorAll('[data-cut]');
+  const cutObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); cutObs.unobserve(e.target); } });
+  }, { threshold: 0.4 });
+  cutLines.forEach(el => cutObs.observe(el));
 </script>
 
 </body>
